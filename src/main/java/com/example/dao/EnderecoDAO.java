@@ -56,7 +56,7 @@ public class EnderecoDAO {
     }
 
     public List<Endereco> searchAll(){
-        List<Endereco> lista = new ArrayList<>();
+        List<Endereco> lista = new ArrayList<Endereco>();
 
         try (Connection conn = ConnectionFactory.getConnection();
             PreparedStatement stmt = conn.prepareStatement(SQL_SEARCH_ALL, Statement.RETURN_GENERATED_KEYS);
