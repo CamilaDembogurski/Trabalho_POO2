@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 public class PessoaDAO {
-    private static final String SQL_INSERT = "INSERT INTO pessoa(nome, sobrenome, data_nascimento, cpf, endereco) VALUES(?, ?, ?, ?, ?);";
-    private static final String SQL_SEARCH_ALL = "SELECT id, nome, sobrenome, data_nascimento, cpf, endereco FROM pessoa ORDER BY id;";
-    private static final String SQL_SEARCH_NOME = "SELECT id, nome, sobrenome, data_nascimento, cpf, endereco FROM pessoa WHERE nome LIKE ?;";
-    private static final String SQL_SEARCH_ID = "SELECT id, nome, sobrenome, data_nascimento, cpf, endereco FROM pessoa WHERE id = ?;";
-    private static final String SQL_SEARCH_AGE = "SELECT p.*, e.* FROM pessoa p LEFT JOIN endereco e ON p.endereco = e.id WHERE DATE_PART('year', AGE(p.data_nascimento)) = ?;";
-    private static final String SQL_UPDATE = "UPDATE pessoa set nome = ?, sobrenome = ?, data_nascimento = ?, cpf = ?, endereco = ? WHERE id = ?;";
-    private static final String SQL_DELETE = "DELETE FROM pessoa WHERE id = ?;";
+    private static final String SQL_INSERT = "INSERT INTO pessoa(nome, sobrenome, data_nascimento, cpf, endereco) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_SEARCH_ALL = "SELECT id, nome, sobrenome, data_nascimento, cpf, endereco FROM pessoa ORDER BY id";
+    private static final String SQL_SEARCH_NOME = "SELECT id, nome, sobrenome, data_nascimento, cpf, endereco FROM pessoa WHERE nome LIKE ?";
+    private static final String SQL_SEARCH_ID = "SELECT id, nome, sobrenome, data_nascimento, cpf, endereco FROM pessoa WHERE id = ?";
+    private static final String SQL_SEARCH_AGE = "SELECT p.*, e.* FROM pessoa p LEFT JOIN endereco e ON p.endereco = e.id WHERE DATE_PART('year', AGE(p.data_nascimento)) = ?";
+    private static final String SQL_UPDATE = "UPDATE pessoa set nome = ?, sobrenome = ?, data_nascimento = ?, cpf = ?, endereco = ? WHERE id = ?";
+    private static final String SQL_DELETE = "DELETE FROM pessoa WHERE id = ?";
 
     public Pessoa insert(Pessoa pessoa){
         try (Connection conn = ConnectionFactory.getConnection();
@@ -67,7 +67,7 @@ public class PessoaDAO {
     }
 
     public List<Pessoa> searchAll(){
-        List<Pessoa> lista = new ArrayList<>();
+        List<Pessoa> lista = new ArrayList<Pessoa>();
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEARCH_ALL, Statement.RETURN_GENERATED_KEYS);
@@ -83,7 +83,7 @@ public class PessoaDAO {
     }
 
     public List<Pessoa> searchByNome(String nome) {
-        List<Pessoa> lista = new ArrayList<>();
+        List<Pessoa> lista = new ArrayList<Pessoa>();
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEARCH_NOME)
@@ -120,7 +120,7 @@ public class PessoaDAO {
     }
 
     public List<Pessoa> searchByIdade(int idade) {
-        List<Pessoa> pessoas = new ArrayList<>();
+        List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEARCH_AGE)
@@ -129,7 +129,7 @@ public class PessoaDAO {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                pessoas.add(mapear(rs)); // ✅ usando seu método
+                pessoas.add(mapear(rs));
             }
 
         } catch (SQLException e) {

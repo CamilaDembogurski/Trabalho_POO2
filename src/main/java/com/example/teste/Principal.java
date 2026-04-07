@@ -110,8 +110,6 @@ public class Principal {
                     break;
                 }
 
-                // ================= PESSOA =================
-
                 case 9: { // inserir pessoa
                     Pessoa p = new Pessoa();
 
@@ -205,8 +203,8 @@ public class Principal {
     public static String lerTexto(Scanner sc, String msg) {
         while (true) {
             System.out.print(msg);
-            String v = sc.nextLine();
-            if (!v.trim().isEmpty()) return v;
+            String valor = sc.nextLine();
+            if (!valor.trim().isEmpty()) return valor;
             System.out.println("Obrigatório!");
         }
     }
@@ -225,8 +223,8 @@ public class Principal {
         while (true) {
             System.out.print(msg);
             try {
-                int v = Integer.parseInt(sc.nextLine());
-                if (v > 0) return v;
+                int valor = Integer.parseInt(sc.nextLine());
+                if (valor > 0) return valor;
                 System.out.println("Tem que ser > 0");
             } catch (Exception e) {
                 System.out.println("Inválido");

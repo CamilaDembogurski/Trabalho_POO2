@@ -9,15 +9,16 @@ import java.util.List;
 import java.util.Optional;
 
 public class EnderecoDAO {
-    private static final String SQL_INSERT = "INSERT INTO endereco(logradouro, numero, cidade, estado, pais) VALUES(?, ?, ?, ?, ?);";
+    private static final String SQL_INSERT = "INSERT INTO endereco(logradouro, numero, cidade, estado, pais) VALUES(?, ?, ?, ?, ?)";
     private static final String SQL_SEARCH_ALL = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco ORDER BY id;";
-    private static final String SQL_SEARCH_LOGRADOURO = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco WHERE logradouro like ?;";
-    private static final String SQL_SEARCH_ESTADO = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco WHERE estado like ?;";
-    private static final String SQL_SEARCH_CIDADE = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco WHERE cidade like ?;";
-    private static final String SQL_SEARCH_ID = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco WHERE id = ?;";
-    private static final String SQL_UPDATE = "UPDATE endereco SET logradouro = ?, numero = ?, cidade = ?, estado = ?, pais = ? WHERE id = ?;";
-    private static final String SQL_UPDATE_PESSOAS = "UPDATE pessoa SET endereco = NULL WHERE endereco = ?;";
-    private static final String SQL_DELETE = "DELETE FROM endereco WHERE id = ?;";
+    private static final String SQL_SEARCH_LOGRADOURO = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco WHERE logradouro like ?";
+    private static final String SQL_SEARCH_ESTADO = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco WHERE estado like ?";
+    private static final String SQL_SEARCH_CIDADE = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco WHERE cidade like ?";
+    private static final String SQL_SEARCH_ID = "SELECT id, logradouro, numero, cidade, estado, pais FROM endereco WHERE id = ?";
+    private static final String SQL_UPDATE = "UPDATE endereco SET logradouro = ?, numero = ?, cidade = ?, estado = ?, pais = ? WHERE id = ?";
+    private static final String SQL_UPDATE_PESSOAS = "UPDATE pessoa SET endereco = NULL WHERE endereco = ?";
+    private static final String SQL_DELETE = "DELETE FROM endereco WHERE id = ?";
+    private static final String SQL_VERIFICA = "SELECT 1 FROM endereco WHERE id = ?";
 
     public Endereco insert(Endereco endereco){
         try (Connection conn = ConnectionFactory.getConnection();
@@ -72,7 +73,7 @@ public class EnderecoDAO {
     }
 
     public List<Endereco> searchByLogradouro(String logradouro) {
-        List<Endereco> lista = new ArrayList<>();
+        List<Endereco> lista = new ArrayList<Endereco>();
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEARCH_LOGRADOURO)
@@ -92,7 +93,7 @@ public class EnderecoDAO {
     }
 
     public List<Endereco> searchByEstado(String estado) {
-        List<Endereco> lista = new ArrayList<>();
+        List<Endereco> lista = new ArrayList<Endereco>();
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEARCH_ESTADO)
@@ -112,7 +113,7 @@ public class EnderecoDAO {
     }
 
     public List<Endereco> searchByCidade(String cidade) {
-        List<Endereco> lista = new ArrayList<>();
+        List<Endereco> lista = new ArrayList<Endereco>();
 
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SQL_SEARCH_CIDADE)
@@ -186,8 +187,6 @@ public class EnderecoDAO {
     }
 
     public boolean existsById(int id){
-        String SQL_VERIFICA = "SELECT 1 FROM endereco WHERE id = ?";
-
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(SQL_VERIFICA)) {
 
