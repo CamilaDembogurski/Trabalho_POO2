@@ -18,7 +18,6 @@ public class Endereco {
     }
 
     public Endereco(String logradouro, Integer numero, String cidade, String estado, String pais) {
-        this.id = id;
         this.logradouro = logradouro;
         this.numero = numero;
         this.cidade = cidade;
