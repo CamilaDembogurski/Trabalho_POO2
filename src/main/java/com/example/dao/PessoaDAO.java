@@ -28,9 +28,16 @@ public class PessoaDAO {
             stmt.setDate(3, new java.sql.Date(pessoa.getDataNascimento().getTime()));
             stmt.setString(4, pessoa.getCpf());
 
-            if (pessoa.getEndereco() == null || pessoa.getEndereco().getId() == null) {
-                throw new RuntimeException("Pessoa deve ter um endereço válido.");
+            if (pessoa.getEndereco() != null && pessoa.getEndereco().getId() != null) {
+                EnderecoDAO enderecoDAO = new EnderecoDAO();
+                if (!enderecoDAO.existsById(pessoa.getEndereco().getId())) {
+                    throw new RuntimeException("Endereço não existe no banco de dados.");
+                }
+                stmt.setInt(5, pessoa.getEndereco().getId());
+            } else {
+                stmt.setNull(5, java.sql.Types.INTEGER);
             }
+
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
