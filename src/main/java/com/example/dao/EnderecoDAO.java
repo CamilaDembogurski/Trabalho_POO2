@@ -178,7 +178,6 @@ public class EnderecoDAO {
                 stmt.setInt(1, id);
                 stmt.executeUpdate();
             }
-
             return true;
         } catch (SQLException e) {
             System.out.println("Erro ao excluir endereço: " + e.getMessage());
